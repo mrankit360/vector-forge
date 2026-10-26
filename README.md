@@ -113,17 +113,6 @@ Easy to understand and implement.
 Useful for validating approximate search results.
 Search cost grows with the number of vectors and their dimensionality.
 
-For 
-𝑁
- vectors with 
-𝑑
- dimensions, a typical query costs 
-𝑂
-(
-𝑁
-𝑑
-)
-.
 
 KD-Tree
 
@@ -158,23 +147,6 @@ Cosine Similarity
 
 Measures the angle between two vectors and is commonly used for semantic embeddings.
 
-cosine
-⁡
-(
-𝐴
-,
-𝐵
-)
-=
-𝐴
-⋅
-𝐵
-∥
-𝐴
-∥
-∥
-𝐵
-∥
 
 Higher cosine similarity indicates greater directional similarity. If the application converts cosine similarity into cosine distance, the ranking convention is reversed: lower distance is better.
 
@@ -182,52 +154,11 @@ Euclidean Distance
 
 Measures straight-line distance between vectors.
 
-𝑑
-(
-𝐴
-,
-𝐵
-)
-=
-∑
-𝑖
-=
-1
-𝑑
-(
-𝐴
-𝑖
-−
-𝐵
-𝑖
-)
-2
-
 Lower values indicate closer vectors.
 
 Manhattan Distance
 
 Measures the sum of the absolute differences between corresponding dimensions.
-
-𝑑
-(
-𝐴
-,
-𝐵
-)
-=
-∑
-𝑖
-=
-1
-𝑑
-∣
-𝐴
-𝑖
-−
-𝐵
-𝑖
-∣
 
 Lower values indicate closer vectors.
 
@@ -247,9 +178,9 @@ Which vectors are returned by a nearest-neighbor search.
 
 Note: A 2D PCA projection is only a visual approximation of the original space. Points that look close on the chart are not necessarily the nearest neighbors in the full-dimensional space.
 
-🤖 Local AI with Ollama
+## 🤖 Local AI with Ollama
 
-This project can use Ollama to run embedding and language models locally.
+This project use Ollama to run embedding and language models locally.
 
 Embedding Model
 
@@ -269,7 +200,7 @@ llama3.2	Generates a response using retrieved context
 
 The embedding dimensionality depends on the selected model and configuration. For the standard nomic-embed-text setup, embeddings are typically 768-dimensional.
 
-📚 RAG Pipeline
+## 📚 RAG Pipeline
 
 Retrieval-Augmented Generation combines semantic search with text generation. Instead of asking an LLM to answer using only its pretrained knowledge, the application retrieves relevant information from your own documents and supplies it as context.
 
@@ -293,40 +224,39 @@ The quality of the answer depends on document quality, chunking, embedding quali
 
 Grounding note: Providing retrieved context does not guarantee that an LLM will only use that context. For more reliable answers, instruct the model to acknowledge missing information and inspect the retrieved passages or citations.
 
-⚙️ Prerequisites
+## ⚙️ Prerequisites
 
 Install the following software before running the project.
 
-Python 3.10+ — Adjust this version to match your project's actual requirements.
+Python 3.12+ — Adjust this version to match your project's actual requirements.
 Git — To clone the repository.
 Ollama — Required for local embeddings and RAG generation.
-Required Python packages — Installed from the project's requirements.txt or pyproject.toml, if provided.
+Required Python packages — Installed from the project's requirements.txt.
 
 USearch supports multiple operating systems and installation methods. Follow its official installation instructions if a platform-specific dependency issue occurs.
 
 🚀 Getting Started
 Step 1 — Clone the Repository
 bash
-git clone https://github.com/YOUR_USERNAME/VectorDB.git
-cd VectorDB
+git clone https://github.com/mrankit360/vector-forge.git
+cd vector-forge
 
-
-Replace YOUR_USERNAME with your GitHub username and VectorDB with the actual repository name if different.
+VectorDB with the actual repository name if different.
 
 Step 2 — Create a Virtual Environment
 
 Windows PowerShell
 
 powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+python -m venv myenv
+myenv\Scripts\Activate.ps1
 
 
 Linux / macOS
 
 bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv myenv
+source myenv/bin/activate
 
 
 If PowerShell prevents virtual-environment activation, use the appropriate execution-policy guidance for your environment or run the activation script from Command Prompt instead.
@@ -339,10 +269,6 @@ bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-
-If your project uses pyproject.toml, follow its documented installation command instead.
-
-Make sure the dependencies include the versions of USearch and any web framework actually used by the application.
 
 Step 4 — Install Ollama and Download Models
 
@@ -379,10 +305,7 @@ Step 5 — Start the Application
 Run the entry point used by your project. For example, if the application entry point is main.py:
 
 bash
-python main.py
-
-
-If the project uses FastAPI, Flask, Streamlit, or another framework, use the corresponding command documented in the repository.
+uvicorn app.main:app --reload
 
 Open the local URL printed by the application in your browser.
 
