@@ -24,62 +24,59 @@ Learn the core concepts behind vector databases such as Pinecone, Weaviate, Chro
 The project has two main workflows: vector search and document question answering.
 
 1. Vector Search
-mermaid
-             Search Query
-                  |
-                  v
-          Query Vector
-                  |
-                  v
-       +--------------------+
-       |  VectorDB Engine   |
-       +--------------------+
-          /       |       \
-         v        v        v
-     Brute     KD-Tree   HNSW
-     Force                |
-          \       |       /
-           \      |      /
-                  v
-          Top-K Neighbors
-                  |
-                  v
-            Search Results
+```mermaid
+            flowchart TD
+    A["Search Query"] --> B["Query Vector"]
+    B --> C["VectorDB Engine"]
+
+    C --> D["Brute Force"]
+    C --> E["KD-Tree"]
+    C --> F["HNSW (USearch)"]
+
+    D --> G["Top-K Neighbors"]
+    E --> G
+    F --> G
+
+    G --> H["Search Results"]
+
+    style A fill:#2563eb,color:#fff,stroke:#1d4ed8
+    style B fill:#0f766e,color:#fff,stroke:#115e59
+    style C fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style D fill:#ea580c,color:#fff,stroke:#c2410c
+    style E fill:#ea580c,color:#fff,stroke:#c2410c
+    style F fill:#059669,color:#fff,stroke:#047857
+    style G fill:#1d4ed8,color:#fff,stroke:#1e40af
+    style H fill:#334155,color:#fff,stroke:#1e293b
+```
 
 3. Retrieval-Augmented Generation (RAG)
-text
-              Your Documents
-                    |
-                    v
-             Text Chunking
-                    |
-                    v
-          Ollama Embedding Model
-             nomic-embed-text
-                    |
-                    v
-             Vector Index
-               (USearch)
-                    |
-                    |
-              Your Question
-                    |
-                    v
-          Embed the Question
-                    |
-                    v
-          Semantic Retrieval
-                    |
-                    v
-           Relevant Text Chunks
-                    |
-                    v
-             Local LLM
-               (Ollama)
-                    |
-                    v
-              Final Answer
+```mermaid
+             flowchart TD
+    A["Your Documents"] --> B["Text Chunking"]
+    B --> C["Ollama Embedding Model<br/>nomic-embed-text"]
+    C --> D["Vector Index<br/>(USearch)"]
 
+    E["Your Question"] --> F["Embed the Question"]
+    F --> G["Semantic Retrieval"]
+    D --> G
+
+    G --> H["Relevant Text Chunks"]
+    H --> I["Local LLM<br/>(Ollama)"]
+    E --> I
+    I --> J["Final Answer"]
+
+    style A fill:#2563eb,color:#fff,stroke:#1d4ed8
+    style B fill:#0f766e,color:#fff,stroke:#115e59
+    style C fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style D fill:#059669,color:#fff,stroke:#047857
+    style E fill:#2563eb,color:#fff,stroke:#1d4ed8
+    style F fill:#0f766e,color:#fff,stroke:#115e59
+    style G fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style H fill:#1d4ed8,color:#fff,stroke:#1e40af
+    style I fill:#ea580c,color:#fff,stroke:#c2410c
+    style J fill:#059669,color:#fff,stroke:#047857
+
+ ```
 
 The embedding model converts text into numerical vectors. The vector index retrieves semantically relevant chunks, which are passed to the language model as context for generating an answer.
 
